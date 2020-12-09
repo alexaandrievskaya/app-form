@@ -20,4 +20,8 @@ export class FormComponent implements OnInit {
     return JSON.stringify(this.model);
   }
 
+  errorsLog(err): void {
+    console.log(err);
+  }
+
 }
