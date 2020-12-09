@@ -3,25 +3,32 @@
   <div class="form-group">
     <label for="name">Name:</label>
       <input id="name" name="name" type="text" class="form-control" #name="ngModel"
-             (input)="errorsLog(name.errors)"
              required
              minlength="4"
              maxlength="10"
              [(ngModel)]="model.name">
+    <!--(input)="errorsLog(name.errors)"-->
 
-    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-      <div *ngIf="name.errors.required">Name is required.</div>
-      <div *ngIf="name.errors.minlength">Name must be at least 4 characters</div>
+    <div *ngIf="formErrors.name" class="alert alert-danger">
+      {{formErrors.name}}
     </div>
+    <!--<div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+      <div *ngIf="name.errors.required">Name is required.</div>
+      <div *ngIf="name.errors.minlength">Name must be at least 4 characters.</div>
+    </div>-->
   </div>
 
   <div class="form-group">
     <label for="age">Age:</label>
       <input id="age" name="age" type="text" class="form-control" required #age="ngModel"
              [(ngModel)]="model.age">
-    <div *ngIf="age.invalid && (age.dirty || age.touched)" class="alert alert-danger">
-      Age is required.
+
+    <div *ngIf="formErrors.age" class="alert alert-danger">
+      {{formErrors.age}}
     </div>
+    <!--<div *ngIf="age.invalid && (age.dirty || age.touched)" class="alert alert-danger">
+      Age is required.
+    </div>-->
   </div>
 
   <div class="form-group">
@@ -38,7 +45,7 @@
 
 </form>
 
-<p>{{diagnostic}}</p>
+<!--<p>{{diagnostic}}</p>-->
 
 
 
