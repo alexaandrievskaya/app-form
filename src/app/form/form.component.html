@@ -1,49 +1,88 @@
-<form (ngSubmit)="onSubmit()" #userForm="ngForm">
-
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
   <div class="form-group">
-    <label for="name">Name:</label>
-      <input id="name" name="name" type="text" class="form-control" #name="ngModel"
-             required
-             minlength="4"
-             maxlength="10"
-             [(ngModel)]="model.name">
-    <!--(input)="errorsLog(name.errors)"-->
-
-    <div *ngIf="formErrors.name" class="alert alert-danger">
-      {{formErrors.name}}
+    <label for="login">Login:</label>
+    <input id="login" type="text" class="form-control"
+            formControlName="login">
+    <div class="alert alert-danger"
+         *ngIf="loginForm.get('login').hasError('required') && loginForm.get('login').touched" >
+          Login is required.
     </div>
-    <!--<div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-      <div *ngIf="name.errors.required">Name is required.</div>
-      <div *ngIf="name.errors.minlength">Name must be at least 4 characters.</div>
-    </div>-->
-  </div>
 
-  <div class="form-group">
-    <label for="age">Age:</label>
-      <input id="age" name="age" type="text" class="form-control" required #age="ngModel"
-             [(ngModel)]="model.age">
-
-    <div *ngIf="formErrors.age" class="alert alert-danger">
-      {{formErrors.age}}
+    <div class="alert alert-danger"
+         *ngIf="loginForm.get('login').hasError('minlength') && loginForm.get('login').touched" >
+          Login must be at least 10 characters.
     </div>
-    <!--<div *ngIf="age.invalid && (age.dirty || age.touched)" class="alert alert-danger">
-      Age is required.
-    </div>-->
   </div>
 
   <div class="form-group">
-    <label for="role">Role:</label>
-      <select id="role" name="role" class="form-control" required [(ngModel)]="model.role">
-        <option *ngFor="let role of roles" [value]="role">{{role}}</option>
-      </select>
+    <label for="password">Password:</label>
+    <input id="password" type="text" class="form-control"
+            formControlName="password">
+    <div class="alert alert-danger"
+         *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched" >
+      Password is required.
+    </div>
+
+    <div class="alert alert-danger"
+         *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').touched" >
+      Login must be at least 8 characters.
+    </div>
   </div>
 
   <div class="form-group">
-    <button (click)="onSubmit()" class="btn btn-info"
-            [disabled]="userForm.invalid">Send</button>
+    <button type="submit" class="btn btn-info"
+    [disabled]="loginForm.invalid">Submit</button>
   </div>
 
 </form>
+
+
+<!--<form (ngSubmit)="onSubmit()" #userForm="ngForm">-->
+
+<!--  <div class="form-group">-->
+<!--    <label for="name">Name:</label>-->
+<!--      <input id="name" name="name" type="text" class="form-control" #name="ngModel"-->
+<!--             required-->
+<!--             minlength="4"-->
+<!--             maxlength="10"-->
+<!--             [(ngModel)]="model.name">-->
+<!--    &lt;!&ndash;(input)="errorsLog(name.errors)"&ndash;&gt;-->
+
+<!--    <div *ngIf="formErrors.name" class="alert alert-danger">-->
+<!--      {{formErrors.name}}-->
+<!--    </div>-->
+<!--    &lt;!&ndash;<div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">-->
+<!--      <div *ngIf="name.errors.required">Name is required.</div>-->
+<!--      <div *ngIf="name.errors.minlength">Name must be at least 4 characters.</div>-->
+<!--    </div>&ndash;&gt;-->
+<!--  </div>-->
+
+<!--  <div class="form-group">-->
+<!--    <label for="age">Age:</label>-->
+<!--      <input id="age" name="age" type="text" class="form-control" required #age="ngModel"-->
+<!--             [(ngModel)]="model.age">-->
+
+<!--    <div *ngIf="formErrors.age" class="alert alert-danger">-->
+<!--      {{formErrors.age}}-->
+<!--    </div>-->
+<!--    &lt;!&ndash;<div *ngIf="age.invalid && (age.dirty || age.touched)" class="alert alert-danger">-->
+<!--      Age is required.-->
+<!--    </div>&ndash;&gt;-->
+<!--  </div>-->
+
+<!--  <div class="form-group">-->
+<!--    <label for="role">Role:</label>-->
+<!--      <select id="role" name="role" class="form-control" required [(ngModel)]="model.role">-->
+<!--        <option *ngFor="let role of roles" [value]="role">{{role}}</option>-->
+<!--      </select>-->
+<!--  </div>-->
+
+<!--  <div class="form-group">-->
+<!--    <button (click)="onSubmit()" class="btn btn-info"-->
+<!--            [disabled]="userForm.invalid">Send</button>-->
+<!--  </div>-->
+
+<!--</form>-->
 
 <!--<p>{{diagnostic}}</p>-->
 
