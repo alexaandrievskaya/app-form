@@ -1,40 +1,82 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
   <div class="form-group">
     <label for="login">Login:</label>
-    <input id="login" type="text" class="form-control"
-            formControlName="login">
-    <div class="alert alert-danger"
-         *ngIf="loginForm.get('login').hasError('required') && loginForm.get('login').touched" >
-          Login is required.
-    </div>
-
-    <div class="alert alert-danger"
-         *ngIf="loginForm.get('login').hasError('minlength') && loginForm.get('login').touched" >
-          Login must be at least 10 characters.
-    </div>
+    <input id="login" type="text" class="form-control" placeholder="Enter your login" formControlName="login">
+    <div class="alert alert-danger" *ngIf="formErrors.login">{{formErrors.login}}</div>
   </div>
 
   <div class="form-group">
     <label for="password">Password:</label>
-    <input id="password" type="text" class="form-control"
-            formControlName="password">
-    <div class="alert alert-danger"
-         *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched" >
-      Password is required.
-    </div>
-
-    <div class="alert alert-danger"
-         *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').touched" >
-      Login must be at least 8 characters.
-    </div>
+    <input id="password" type="password" class="form-control" placeholder="Enter your password" formControlName="password">
+    <div class="alert alert-danger" *ngIf="formErrors.password">{{formErrors.password}}</div>
   </div>
 
   <div class="form-group">
-    <button type="submit" class="btn btn-info"
-    [disabled]="loginForm.invalid">Submit</button>
+    <label for="email">Email:</label>
+    <input id="email" type="email" class="form-control" placeholder="email@smth.smth" formControlName="email">
+    <div class="alert alert-danger" *ngIf="formErrors.email">{{formErrors.email}}</div>
+  </div>
+
+  <div class="form-group">
+    <label for="age">Age:</label>
+    <input id="age" type="number" class="form-control" placeholder="Your age" formControlName="age">
+    <div class="alert alert-danger" *ngIf="formErrors.age">{{formErrors.age}}</div>
+  </div>
+
+  <div class="form-group">
+    <label for="role">Role:</label>
+    <select id="role" class="form-control" formControlName="role">
+      <option [value]="null" selected disabled>Choose your role:</option>
+      <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+    </select>
+    <div class="alert alert-danger" *ngIf="formErrors.role">{{formErrors.role}}</div>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-info" [disabled]="userForm.invalid">Submit</button>
   </div>
 
 </form>
+
+
+<!--<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" novalidate>-->
+<!--  <div class="form-group">-->
+<!--    <label for="login">Login:</label>-->
+<!--    <input id="login" type="text" class="form-control"-->
+<!--            formControlName="login">-->
+<!--    <div class="alert alert-danger"-->
+<!--         *ngIf="loginForm.get('login').hasError('required') && loginForm.get('login').touched" >-->
+<!--          Login is required.-->
+<!--    </div>-->
+
+<!--    <div class="alert alert-danger"-->
+<!--         *ngIf="loginForm.get('login').hasError('minlength') && loginForm.get('login').touched" >-->
+<!--          Login must be at least 10 characters.-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="form-group">-->
+<!--    <label for="password">Password:</label>-->
+<!--    <input id="password" type="text" class="form-control"-->
+<!--            formControlName="password">-->
+<!--    <div class="alert alert-danger"-->
+<!--         *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched" >-->
+<!--      Password is required.-->
+<!--    </div>-->
+
+<!--    <div class="alert alert-danger"-->
+<!--         *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').touched" >-->
+<!--      Login must be at least 8 characters.-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="form-group">-->
+<!--    <button type="submit" class="btn btn-info"-->
+<!--    [disabled]="loginForm.invalid">Submit</button>-->
+<!--  </div>-->
+
+<!--</form>-->
 
 
 <!--<form (ngSubmit)="onSubmit()" #userForm="ngForm">-->
