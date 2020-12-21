@@ -1,33 +1,37 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
   <div class="form-group">
-    <label for="login">Login:</label>
-    <input id="login" type="text" class="form-control" placeholder="Enter your login" formControlName="login">
-    <div class="alert alert-danger" *ngIf="formErrors.login">{{formErrors.login}}</div>
+    <label for="login">Login: <span class="text-danger">*</span></label>
+    <input id="login" type="text" class="form-control is-valid" placeholder="{{placeHolders.login}}"
+           formControlName="login"
+    [ngClass]="{'is-valid': login.valid, 'is-invalid': login.invalid && login.touched}">
+<!--    <div class="alert alert-danger" *ngIf="formErrors.login">{{formErrors.login}}</div>-->
+    <div *ngIf="login.valid" class="valid-feedback">{{formSuccess.login}}</div>
+    <div *ngIf="login.invalid && login.touched" class="invalid-feedback">{{formErrors.login}}</div>
   </div>
 
   <div class="form-group">
     <label for="password">Password:</label>
-    <input id="password" type="password" class="form-control" placeholder="Enter your password" formControlName="password">
-    <div class="alert alert-danger" *ngIf="formErrors.password">{{formErrors.password}}</div>
+    <input id="password" type="password" class="form-control" placeholder="{{placeHolders.password}}" formControlName="password">
+<!--    <div class="alert alert-danger" *ngIf="formErrors.password">{{formErrors.password}}</div>-->
   </div>
 
   <div class="form-group">
     <label for="email">Email:</label>
-    <input id="email" type="email" class="form-control" placeholder="email@smth.smth" formControlName="email">
-    <div class="alert alert-danger" *ngIf="formErrors.email">{{formErrors.email}}</div>
+    <input id="email" type="email" class="form-control" placeholder="{{placeHolders.email}}" formControlName="email">
+<!--    <div class="alert alert-danger" *ngIf="formErrors.email">{{formErrors.email}}</div>-->
   </div>
 
   <div class="form-group">
     <label for="age">Age:</label>
-    <input id="age" type="number" class="form-control" placeholder="Your age" formControlName="age">
-    <div class="alert alert-danger" *ngIf="formErrors.age">{{formErrors.age}}</div>
+    <input id="age" type="number" class="form-control" placeholder="{{placeHolders.age}}" formControlName="age">
+<!--    <div class="alert alert-danger" *ngIf="formErrors.age">{{formErrors.age}}</div>-->
   </div>
 
   <div class="form-group">
     <label for="role">Role:</label>
     <select id="role" class="form-control" formControlName="role">
-      <option [value]="null" selected disabled>Choose your role:</option>
+      <option [value]="null" selected disabled>{{placeHolders.role}}</option>
       <option *ngFor="let role of roles" [value]="role">{{role}}</option>
     </select>
     <div class="alert alert-danger" *ngIf="formErrors.role">{{formErrors.role}}</div>

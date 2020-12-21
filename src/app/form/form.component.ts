@@ -1,7 +1,8 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../user.class';
-import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
-import {emailValidator} from '../custom-validators';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {emailValidator, rangeValidator} from '../custom-validators';
+import {FORM_ERRORS, FORM_SUCCESS, PLACEHOLDERS, ROLES, VALIDATION_MESSAGES} from '../form.data';
 
 @Component({
   selector: 'app-form',
@@ -12,37 +13,17 @@ export class FormComponent implements OnInit {
 
   userForm: FormGroup; /*это форма отдельных элементов управления - группа FormControls*/
   user: User = new User(1, null, null, null, null, null);
-  roles: string[] = ['Guest', 'Moderator', 'Administrator'];
-  formErrors = {
-    login: '',
-    password: '',
-    email: '',
-    age: '',
-    role: ''
-  };
-  validationMessages = {
-    login: {
-      required: 'Login is required.',
-      minlength: 'Login must be at least 5 characters.',
-      maxlength: 'Login must be no more then 15 characters.'
-    },
-    password: {
-      required: 'Password is required.',
-      minlength: 'Password must be at least 8 characters.',
-      maxlength: 'Login must be no more then 25 characters.'
-    },
-    email: {
-      required: 'Email is required.',
-      emailValidator: 'Invalid Email.'
-    },
-    age: {
-      required: 'Age is required.',
-      pattern: 'Value must be a number.'
-    },
-    role: {
-      required: 'Role is required.'
-    }
-  };
+  roles: string[] = ROLES;
+  formErrors = FORM_ERRORS;
+  validationMessages = VALIDATION_MESSAGES;
+  placeHolders = PLACEHOLDERS;
+  formSuccess = FORM_SUCCESS;
+
+  login: AbstractControl;
+  password: AbstractControl;
+  email: AbstractControl;
+  age: AbstractControl;
+  role: AbstractControl;
 
   // model: User = new User(1, '', '', null);
   // roles: string[] = ['Guest', 'Moderator', 'Administrator'];
@@ -69,6 +50,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    this.createControls();
 
     // this.loginForm = new FormGroup({
     //   login: new FormControl('User name', [Validators.required, Validators.minLength(10)]),
@@ -81,7 +63,7 @@ export class FormComponent implements OnInit {
       login: [this.user.login, [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
       password: [this.user.password, [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
       email: [this.user.email, [Validators.required, emailValidator]],
-      age: [this.user.age, [Validators.required, Validators.pattern('^\\d+')]],
+      age: [this.user.age, [Validators.required, rangeValidator(1, 122)]],
       role: [this.user.role, [Validators.required]],
     });
 
@@ -90,6 +72,14 @@ export class FormComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.userForm.value);
+  }
+
+  createControls(): void {
+    this.login = this.userForm.controls.login;
+    this.password = this.userForm.controls.password;
+    this.email = this.userForm.controls.email;
+    this.age = this.userForm.controls.age;
+    this.role = this.userForm.controls.role;
   }
 
   onValueChanged(): void {
@@ -107,7 +97,7 @@ export class FormComponent implements OnInit {
         const message = this.validationMessages[field];
 
         for (const key in control.errors) {
-          this.formErrors[field] += message[key];
+          this.formErrors[field] += message[key] + ' ';
         }
       }
     }
